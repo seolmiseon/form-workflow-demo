@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Human-in-the-loop Form Workflow Demo</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, sans-serif; }
+    body { margin: 0; background: #f6f8fb; color: #162033; }
+    main { max-width: 760px; margin: 40px auto; padding: 0 20px 50px; }
+    .card { background: white; border: 1px solid #d8e0eb; border-radius: 14px; padding: 24px; box-shadow: 0 8px 24px #16203312; }
+    label { display: block; margin-top: 16px; font-weight: 650; }
+    input, textarea { box-sizing: border-box; width: 100%; margin-top: 7px; padding: 10px 12px; border: 1px solid #b9c6d8; border-radius: 8px; font: inherit; }
+    textarea { min-height: 84px; resize: vertical; }
+    .status { margin-top: 18px; padding: 12px; border-radius: 8px; background: #eef6ff; white-space: pre-wrap; }
+    .actions { display: flex; gap: 10px; margin-top: 22px; }
+    button { padding: 10px 14px; border-radius: 8px; border: 1px solid #b9c6d8; background: #eef2f7; }
+    button:disabled { cursor: not-allowed; opacity: .62; }
+    code { background: #eef2f7; border-radius: 4px; padding: 2px 4px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Local form workflow demo</h1>
+    <p>This is a fake local form. It never contacts a hiring platform.</p>
+    <section class="card">
+      <form id="resume-form">
+        <label>Candidate name<input id="candidate-name" autocomplete="off"></label>
+        <label>Target role<input id="target-role" autocomplete="off"></label>
+        <label>Introduction<textarea id="intro"></textarea></label>
+        <label>Skills<input id="skills" autocomplete="off"></label>
+        <label>Links<input id="links" autocomplete="off"></label>
+        <label>Project summary<textarea id="project-summary"></textarea></label>
+        <div class="actions">
+          <button type="button" id="verify">Verify visible values</button>
+          <button type="button" disabled title="Disabled by design">Save (human only)</button>
+          <button type="button" disabled title="Disabled by design">Apply (human only)</button>
+        </div>
+      </form>
+      <div id="status" class="status">Loading local payload…</div>
+    </section>
+    <p><strong>Safety boundary:</strong> the demo fills fields and verifies them. Save/apply actions remain blocked.</p>
+  </main>
+  <script>
+    const payload = {
+      candidate_name: "Sample Candidate",
+      target_role: "Workflow Product Engineer",
+      intro: "I turn ambiguous work into observable workflows.",
+      skills: ["Python", "RAG", "Workflow"],
+      links: ["https://example.invalid/project"],
+      project_summary: "A local demo that validates a form contract before filling visible fields."
+    };
+    const mapping = {
+      candidate_name: "#candidate-name",
+      target_role: "#target-role",
+      intro: "#intro",
+      skills: "#skills",
+      links: "#links",
+      project_summary: "#project-summary"
+    };
+    const text = value => Array.isArray(value) ? value.join(", ") : String(value ?? "");
+    const status = document.querySelector("#status");
+
+    for (const [key, selector] of Object.entries(mapping)) {
+      document.querySelector(selector).value = text(payload[key]);
+    }
+    status.textContent = "DRY-RUN complete\nFields filled locally; no save/apply action was attempted.";
+
+    document.querySelector("#verify").addEventListener("click", () => {
+      const mismatches = [];
+      for (const [key, selector] of Object.entries(mapping)) {
+        if (document.querySelector(selector).value !== text(payload[key])) mismatches.push(key);
+      }
+      status.textContent = mismatches.length
+        ? `VISIBLE-VERIFY: FAIL\nMismatched fields: ${mismatches.join(", ")}`
+        : "VISIBLE-VERIFY: PASS\nHUMAN-CHECK: required before any save/apply action\nSAVE/APPLY: BLOCKED";
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "screen": "local-demo-resume-form",
+  "captured_at": "2026-01-01T00:00:00Z",
+  "fields": [
+    {"key": "candidate_name", "selector": "#candidate-name", "kind": "text", "required": true},
+    {"key": "target_role", "selector": "#target-role", "kind": "text", "required": true},
+    {"key": "intro", "selector": "#intro", "kind": "textarea", "required": true},
+    {"key": "skills", "selector": "#skills", "kind": "text", "required": false},
+    {"key": "links", "selector": "#links", "kind": "text", "required": false},
+    {"key": "project_summary", "selector": "#project-summary", "kind": "textarea", "required": false}
+  ],
+  "actions": {
+    "save": "blocked",
+    "apply": "blocked"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "candidate_name": "Sample Candidate",
+  "target_role": "Workflow Product Engineer",
+  "intro": "I turn ambiguous work into observable workflows.",
+  "skills": ["Python", "RAG", "Workflow"],
+  "links": ["https://example.invalid/project"],
+  "project_summary": "A local demo that validates a form contract before filling visible fields."
+}
