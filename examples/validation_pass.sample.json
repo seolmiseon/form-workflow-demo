@@ -1,0 +1,6 @@
+{
+  "run_id": "sample-run-001",
+  "decision": "PASS",
+  "summary": "Contract and visible-value checks passed.",
+  "failed_checks": []
+}

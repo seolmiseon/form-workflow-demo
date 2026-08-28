@@ -1,0 +1,6 @@
+{
+  "run_id": "sample-run-002",
+  "decision": "PASS",
+  "summary": "The configured checks passed, but a reviewer raised a semantic concern.",
+  "failed_checks": []
+}
