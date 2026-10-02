@@ -1,6 +1,17 @@
 import unittest
+from pathlib import Path
+from tempfile import TemporaryDirectory
 
-from src.loop_engineer import build_observation, classify, deduplicate
+from src.loop_engineer import (
+    ArtifactEvidence,
+    ResolutionError,
+    build_observation,
+    classify,
+    deduplicate,
+    file_sha256,
+    resolve,
+    start_review,
+)
 
 
 PASS_REPORT = {
@@ -46,7 +57,60 @@ class LoopEngineerTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             classify(observation, "add-a-rule-now")
 
+    def test_resolution_requires_explicit_review_first(self):
+        observation = build_observation(PASS_REPORT, repeated_correction=True)
+        with self.assertRaises(ResolutionError):
+            resolve(
+                observation,
+                decision_accepted=True,
+                authorization="Approved after review.",
+                checks=[True],
+                artifacts=[],
+            )
+
+    def test_resolution_rejects_incomplete_evidence(self):
+        observation = start_review(build_observation(PASS_REPORT, repeated_correction=True))
+        with self.assertRaises(ResolutionError):
+            resolve(
+                observation,
+                decision_accepted=False,
+                authorization="",
+                checks=[False],
+                artifacts=[],
+            )
+
+    def test_resolution_requires_hash_matched_artifacts(self):
+        observation = start_review(build_observation(PASS_REPORT, repeated_correction=True))
+        with TemporaryDirectory() as directory:
+            artifact = Path(directory) / "verified-output.txt"
+            artifact.write_text("verified", encoding="utf-8")
+            evidence = ArtifactEvidence(str(artifact), file_sha256(artifact))
+            resolved = resolve(
+                observation,
+                decision_accepted=True,
+                authorization="Approved after review.",
+                checks=[True, True],
+                artifacts=[evidence],
+            )
+            self.assertEqual(resolved.status, "RESOLVED")
+            self.assertEqual(observation.status, "IN_REVIEW")
+
+    def test_stale_artifact_cannot_inherit_an_old_pass(self):
+        observation = start_review(build_observation(PASS_REPORT, repeated_correction=True))
+        with TemporaryDirectory() as directory:
+            artifact = Path(directory) / "verified-output.txt"
+            artifact.write_text("before", encoding="utf-8")
+            evidence = ArtifactEvidence(str(artifact), file_sha256(artifact))
+            artifact.write_text("after", encoding="utf-8")
+            with self.assertRaises(ResolutionError):
+                resolve(
+                    observation,
+                    decision_accepted=True,
+                    authorization="Approved after review.",
+                    checks=[True],
+                    artifacts=[evidence],
+                )
+
 
 if __name__ == "__main__":
     unittest.main()
-

@@ -12,7 +12,7 @@ payload -> contract checks -> dry-run plan -> visible verification -> human gate
                                   ▼
 Loop Engineer inbox -> reproduce -> classify -> experiment -> reviewed decision
                                                         │
-                                      no automatic rule mutation
+                                  authorized evidence-bound resolution
 ```
 
 ## Capture policy
@@ -36,7 +36,23 @@ Adding a rule after every failure makes an execution skill larger and more rigid
 
 An observation is not authorization. The public demo can classify a signal as `ONE_OFF`, `PATTERN`, `EXPECTED`, or `INSUFFICIENT_EVIDENCE`, but it never edits execution rules automatically.
 
+## Evidence-bound review lifecycle
+
+Captured signals start as `UNTRIAGED`. A reviewer must explicitly move a signal
+to `IN_REVIEW`; it cannot be resolved directly from the inbox. A signal becomes
+`RESOLVED` only when all of the following are present:
+
+1. an accepted review decision;
+2. explicit human authorization for the change or disposition;
+3. one or more verification checks, all passing;
+4. at least one reviewed artifact whose current SHA-256 digest matches the
+   digest recorded at verification time.
+
+The digest check prevents a modified document, executable, or generated output
+from inheriting a stale PASS result. A later change requires fresh verification;
+the loop is deliberately a review record, not a permission to auto-edit the
+execution harness.
+
 ## Public boundary
 
 The examples use fake run IDs and generic failures. They contain no resumes, employers, job URLs, platform selectors, model transcripts, personal objections, or private validation logs.
-
