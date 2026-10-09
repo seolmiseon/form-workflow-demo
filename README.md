@@ -1,4 +1,4 @@
-# Human-in-the-loop Form Workflow + Loop Engineering Demo
+# 사람이 최종 확인하는 입력 자동화·실패 개선 루프 데모
 
 채용 플랫폼의 실제 계정이나 데이터를 건드리지 않고, **문서 → 구조화된 payload → 화면 구조 확인 → 입력 계획 → 값 검증 → 사람 최종 확인** 흐름을 재현하는 공개용 데모입니다. 여기에 **정상 실행과 반복 실패 분석을 분리하는 Loop Engineer 계층**을 추가했습니다.
 
@@ -30,7 +30,7 @@ Loop Engineering 데모는 정상 PASS를 수집하지 않습니다. `WARN/REVIS
 src/form_workflow.py       # payload/snapshot 검증과 입력 계획
 src/loop_engineer.py       # 이상 신호 선별·중복 제거·검토 분류
 scripts/run_demo.py        # 의존성 없는 재현용 CLI
-scripts/run_loop_demo.py   # 정상 PASS와 disputed PASS 비교
+scripts/run_loop_demo.py   # 정상 통과와 이의가 제기된 통과 판정 비교
 demo/index.html            # 외부 사이트가 아닌 로컬 가짜 입력 화면
 examples/                  # 가짜 회사·가짜 지원자 데이터
 tests/                     # 실행 계약과 Loop 포착 경계 테스트
@@ -59,12 +59,12 @@ docs/                      # 아키텍처·안전 정책·Loop Engineering 설�
 
 포함한 것은 공개 검토에 필요한 일반화된 구조뿐입니다.
 
-- payload 생성·검증의 순수 로직
-- Form Snapshot의 필드 계약 예시
-- selector mapping과 dry-run 계획
+- 입력 데이터(payload) 생성·검증 로직
+- 화면 구조 기록(Form Snapshot)의 필드 계약 예시
+- 화면 요소 선택자 연결과 실행 전 모의 계획
 - 입력 후 값 검증
 - 정상 PASS와 이상 신호를 분리하는 관찰 정책
-- 사용자 이의 제기와 반복 수정의 일반화된 inbox record
+- 사용자 이의 제기와 반복 수정의 일반화된 관찰 기록
 - 중복 제거와 `ONE_OFF/PATTERN/EXPECTED/INSUFFICIENT_EVIDENCE` 분류
 - 가짜 데이터와 재현 가능한 테스트
 
@@ -74,7 +74,7 @@ docs/                      # 아키텍처·안전 정책·Loop Engineering 설�
 - 실제 payload, form snapshot, 실행 로그
 - 실제 사용자 이의 제기, 모델 대화, 실패 이력
 - 쿠키·세션·브라우저 프로필·비밀번호·OTP
-- 로컬 플랫폼용 selector 파일이나 private endpoint 호출
+- 로컬 플랫폼용 selector 파일이나 비공개 API 호출
 - 저장·지원 버튼 자동 클릭 코드
 
 ## 설계 원칙
@@ -92,4 +92,4 @@ docs/                      # 아키텍처·안전 정책·Loop Engineering 설�
 
 이 데모는 “AI가 대신 지원했다”가 아니라, 비정형 문서를 작업 단위로 정규화하고, 실행 전 화면 계약을 확인하며, 실패 시 멈추는 **Human-in-the-loop Workflow**를 보여줍니다. 또한 테스트를 통과하는 것과 실제 사용 품질이 같은지 의심하고, 반복 실패만 외부 관찰 루프로 보내 최소 수정과 회귀 검증을 거치는 **Harness Engineering → Loop Engineering 확장**을 재현합니다.
 
-자세한 설계는 [아키텍처](docs/ARCHITECTURE.md), [안전 정책](docs/SAFETY_POLICY.md), [Loop Engineering](docs/LOOP_ENGINEERING.md)에서 확인할 수 있습니다.
+자세한 설계는 [아키텍처](docs/ARCHITECTURE.md), [안전 정책](docs/SAFETY_POLICY.md), [실패 개선 루프](docs/LOOP_ENGINEERING.md)에서 확인할 수 있습니다.

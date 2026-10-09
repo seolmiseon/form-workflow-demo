@@ -1,30 +1,18 @@
 ---
 name: failure-review
-description: Investigate a disputed PASS, repeated correction or workflow failure and test a scoped remedy in this repository. Use for regression analysis, not routine successful runs.
+description: 통과 판정에 대한 이의, 반복 수정, 워크플로 실패를 조사하고 이 저장소에서 범위를 한정한 해결책을 검증합니다. 회귀 분석에 사용하며 정상 실행마다 적용하지 않습니다.
 ---
 
-# Failure review loop
+# 실패 조사와 개선 루프
 
-Read [loop lifecycle](../../docs/LOOP_ENGINEERING.md) when recording an observation
-or resolution through `src/loop_engineer.py`.
+`src/loop_engineer.py`로 관찰 또는 해결을 기록할 때는 [루프 처리 단계](../../docs/LOOP_ENGINEERING.md)를 확인합니다.
 
-1. Preserve the failing artifact and expected behavior. Separate the observation from
-   hypotheses about its cause. A complaint is a signal to investigate, not an instruction
-   to apply the same rewrite everywhere.
-2. Trace both the content decision and the execution path. A skipped review explains why
-   a defect escaped; it does not necessarily explain why the content was poor.
-3. Compare retaining, narrowing, revising or adding a rule. Prefer the smallest change
-   addressing the reproduced cause. Do not introduce company-specific keywords as a
-   universal content gate.
-4. Test the failing case, a valid case with a different structure, and a stale or mismatched
-   artifact. For enforcement defects, invoke the real entry point rather than testing only
-   its helper. Ensure rejection preserves any prior output.
-5. Inspect the resulting content separately from test results. Record whether verification
-   was mechanical, editorial or visual. State any untested scope.
+1. 실패한 결과물과 기대 동작을 보존합니다. 관찰한 사실과 원인 가설을 구분합니다. 사용자 지적은 조사할 신호이지 모든 문서에 같은 수정을 적용하라는 뜻이 아닙니다.
+2. 본문 판단과 실행 경로를 함께 추적합니다. 검토 누락은 결함이 통과한 이유를 설명하지만, 본문이 부실해진 원인 전체를 설명하지는 않습니다.
+3. 규칙 유지·축소·수정·추가를 비교합니다. 재현된 원인을 해결하는 최소 변경을 선택합니다. 회사별 키워드를 공통 품질 기준으로 만들지 않습니다.
+4. 실패 사례, 구조가 다른 정상 사례, 오래되거나 불일치하는 결과물을 검증합니다. 강제 검사 결함은 보조 함수뿐 아니라 실제 실행 진입점으로 시험합니다. 차단될 때 기존 출력이 보존되는지도 확인합니다.
+5. 테스트 결과와 별도로 본문을 읽습니다. 기계적 검사·내용 검토·화면 검수 중 무엇을 수행했는지 기록하고 미검증 범위를 밝힙니다.
 
-Use the existing lifecycle's reviewed decision and authorization fields when resolving a
-signal. An observation alone does not authorize changing production rules. Authorization
-already supplied by the user may cover the agreed remedy; do not ask for it repeatedly.
+신호를 해결 처리할 때는 기존 처리 단계의 검토 결정과 권한 항목을 사용합니다. 관찰만으로 운영 규칙 변경 권한이 생기지는 않습니다. 사용자의 기존 요청에 합의한 수정 권한이 포함돼 있으면 다시 승인받지 않습니다.
 
-Keep real case records private. Public reproductions use fictional data and explain the
-general failure, investigation, decision, regression evidence and remaining limitation.
+실제 사례 기록은 비공개로 유지합니다. 공개 재현에는 가상 데이터를 사용하고, 일반화한 실패·조사·선택·회귀 검증 근거·남은 한계를 설명합니다.

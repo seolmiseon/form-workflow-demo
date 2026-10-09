@@ -1,36 +1,26 @@
-# Agent collaboration contract
+# 에이전트 협업 지침
 
-Work as an analytical partner: inspect evidence, explain tradeoffs and challenge unsupported
-claims. Follow the user's goal rather than mechanically expanding a checklist.
+**파트너 원칙:** 근거를 분석하고 선택의 장단점을 설명하며, 근거 없는 주장에는 이견을 제시합니다. 체크리스트를 기계적으로 늘리지 않고 사용자의 목적을 함께 달성합니다.
 
-This is a public, synthetic demonstration. Do not import private resumes, employer data,
-browser sessions, production logs or proprietary prompts to make the examples realistic.
+이 저장소는 가상 데이터를 사용하는 공개 데모입니다. 실제 이력서, 회사 자료, 브라우저 세션, 운영 로그, 비공개 프롬프트를 예시에 넣지 않습니다.
 
-## Choose the relevant workflow
+## 작업에 맞는 절차 선택
 
-- For evidence-backed document review and release, read
-  [document-review SKILL.md](skills/document-review/SKILL.md).
-- For disputed passes and repeated failures, read
-  [failure-review SKILL.md](skills/failure-review/SKILL.md).
-- For local form planning, use `src/form_workflow.py` and its tests. Live platform
-  submission is outside this repository's implementation.
+- 근거 기반 문서 검토와 출력: [문서 검토 SKILL.md](skills/document-review/SKILL.md)
+- 통과 판정에 대한 이의, 반복 실패 조사: [실패 검토 SKILL.md](skills/failure-review/SKILL.md)
+- 로컬 입력 계획: `src/form_workflow.py`와 관련 테스트. 실제 플랫폼 제출은 구현 범위 밖입니다.
 
-## Responsibilities
+## 역할과 책임
 
-- Analyst: map requirements to direct evidence, transferable evidence and unknowns.
-  Ask a specific question when a missing fact changes the recommendation.
-- Author: select cases for the actual requirement. Preserve observation, reasoning,
-  contribution and result; do not impose a page count or force different prose for similar needs.
-- Reviewer: read the deliverable before the author's completion report. Cite the actual
-  source, identify unsupported causal links, and distinguish content judgment from lint.
-- Executor: use the gated render function; do not bypass it to obtain an output after rejection.
+- 분석: 요구사항을 직접 근거·전이 가능한 근거·미확인으로 구분합니다. 추천이 달라질 핵심 정보가 없으면 구체적으로 질문합니다.
+- 작성: 실제 요구를 입증하는 사례를 고릅니다. 관찰·조사·선택·본인 기여·결과를 보존하고, 페이지 수를 강제하거나 유사한 요구의 문장을 억지로 다르게 만들지 않습니다.
+- 검토: 작성자의 완료 보고보다 결과물을 먼저 읽습니다. 원문을 인용해 근거 없는 인과관계를 확인하고, 본문 판단과 형식 검사를 구분합니다.
+- 실행: 검사를 내장한 렌더링 함수를 사용합니다. 차단된 출력을 얻으려고 검사를 우회하지 않습니다.
 
-These are responsibilities, not proof of independent reviewers or a running multi-agent service.
-A single agent may perform them sequentially and must disclose that scope.
+위 항목은 책임 구분이며, 독립 검토자나 다중 에이전트 서비스가 실제로 실행된다는 뜻은 아닙니다. 한 에이전트가 순차 수행할 수 있으며 수행 범위를 밝혀야 합니다.
 
-## Verify and report
+## 검증과 보고
 
-Run `python -m unittest discover -s tests -v` after code changes. Report what ran and
-what remains unverified. A matching hash does not prove factual truth, editorial quality,
-reviewer identity or approval to transmit data. The public instructions describe expected
-agent behavior; only the implemented code paths enforce mechanical checks.
+코드를 변경하면 `python -m unittest discover -s tests -v`를 실행합니다. 실행한 검사와 미확인 범위를 보고합니다.
+
+해시 일치는 사실성·본문 품질·검토자 신원·외부 전송 승인을 보장하지 않습니다. 지침은 기대하는 행동을 설명하며, 기계적 검사는 구현된 코드 경로에서만 강제됩니다.

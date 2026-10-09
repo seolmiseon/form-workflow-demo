@@ -1,44 +1,28 @@
 ---
 name: document-review
-description: Review an evidence-backed document against its requirements and prepare a version-bound release in this synthetic workflow repository. Use for document review or release tasks, not general prose editing.
+description: 가상 워크플로 저장소에서 문서를 요구사항과 근거에 대조하고 검토한 버전에 연결해 출력합니다. 문서 검토·출력 작업에 사용하며 일반적인 문장 교정에는 적용하지 않습니다.
 ---
 
-# Evidence-backed document review
+# 근거 기반 문서 검토
 
-Use the supplied requirement and source evidence as the starting point, not a previous
-PASS message. See [release design](../../docs/DOCUMENT_RELEASE.md) for the gate's scope.
+이전 PASS 보고가 아니라 요구사항과 원본 근거에서 시작합니다. 검사가 보장하는 범위는 [문서 출력 설계](../../docs/DOCUMENT_RELEASE.md)를 확인합니다.
 
-## Before writing
+## 작성 전 판단
 
-For each material requirement, record the evidence and whether it is direct,
-transferable, unknown or contradicted. Search available sources before declaring absence.
-If an unknown affects the recommendation, ask what happened, who was involved,
-what changed and where a record may exist. Do not turn missing records into invented facts.
+주요 요구마다 근거를 기록하고 직접 경험·전이 가능·미확인·상충으로 구분합니다. 경험이 없다고 판단하기 전에 이용 가능한 원본을 찾습니다. 미확인 사항이 추천에 영향을 주면 실제 상황, 참여자, 바뀐 내용, 기록 위치를 구체적으로 묻습니다. 기록이 없다는 이유로 사실을 만들어 넣지 않습니다.
 
-Choose the smallest set of cases that adequately supports the responsibility. The main
-case should explain the observed problem, investigation, choice, personal contribution
-and verified outcome. Add another case only when it contributes a missing capability.
-Length and visual layout follow the evidence; no fixed number of pages or projects applies.
+책임을 충분히 입증하는 데 필요한 사례를 선택합니다. 대표 사례는 관찰한 문제·조사·선택·본인 기여·검증 결과를 설명해야 합니다. 다른 사례는 부족한 역량을 보완할 때 추가합니다. 분량과 시각 구성은 근거에 따라 정하며 페이지 수나 프로젝트 수를 고정하지 않습니다.
 
-## Read as a reviewer
+## 독자 관점의 검토
 
-Read the document without relying on the author's summary. Reconstruct what changed,
-why that approach was chosen and what the result actually establishes. Quote the passages
-supporting those answers. Check that diagrams preserve branches and joins, and that a
-measurement is not attributed to an unrelated change. Distinguish experiments, deployed
-features and future plans. A keyword's presence is not evidence of a coherent explanation.
+작성자의 요약에 의존하지 않고 문서를 읽습니다. 무엇을 바꿨는지, 왜 그 방법을 선택했는지, 결과가 실제로 무엇을 입증하는지 재구성하고 해당 문장을 인용합니다. 도식의 분기·합류와 수치의 인과관계를 확인합니다. 실험·배포 완료·향후 계획을 구분합니다. 키워드가 있다는 사실만으로 설명이 충분하다고 판정하지 않습니다.
 
-## Release in this demo
+## 데모의 출력 절차
 
-The executable schema is illustrated by `tests/test_document_release.py` at repository root.
-Create a release manifest and a review record referencing fictional JD, resume and portfolio
-files relative to one release folder. Include company, reviewer, status, source hashes,
-quotations and judgments (`jd_responsibility`, `causal_assessment`, `remaining_gaps`).
-Record PASS only after actual content review; do not fill fields to satisfy the validator.
+실행 가능한 계약 형식은 저장소 루트의 `tests/test_document_release.py`에 있습니다. 하나의 출력 준비 폴더를 기준으로 가상 공고·이력서·포트폴리오의 상대경로를 지정한 manifest와 검토 기록을 작성합니다. 회사·검토자·상태·원문 해시·인용문과 판단 항목(`jd_responsibility`, `causal_assessment`, `remaining_gaps`)을 포함합니다.
 
-Call `src.document_release.render(folder, source, output)` with output outside the input
-folder. It performs integrity checks before writing an HTML preview. On rejection, explain
-the defect and repair the source or review rather than bypassing the gate. Source changes
-require renewed review and hashes. Rendering is not visual approval or external submission.
+실제 본문 검토 후에만 PASS를 기록합니다. 검사기를 통과하려고 항목만 채우지 않습니다.
 
-The code validates record integrity, not the truth or quality of the recorded judgments.
+출력 경로를 입력 폴더 밖으로 지정해 `src.document_release.render(folder, source, output)`을 호출합니다. 이 함수는 무결성 검사 후 HTML 미리보기를 씁니다. 차단되면 결함을 설명하고 원문이나 검토 기록을 수정합니다. 원문이 바뀌면 다시 검토하고 해시를 갱신합니다. 렌더링 완료는 화면 검수나 외부 제출 완료를 뜻하지 않습니다.
+
+코드는 검토 기록의 무결성을 검사하며, 기록된 판단의 진실성이나 품질을 자동 보장하지 않습니다.
