@@ -103,3 +103,5 @@ docs/                      # 아키텍처·안전 정책·Loop Engineering 설�
 이 데모는 “AI가 대신 지원했다”가 아니라, 비정형 문서를 작업 단위로 정규화하고, 실행 전 화면 계약을 확인하며, 실패 시 멈추는 **Human-in-the-loop Workflow**를 보여줍니다. 또한 테스트를 통과하는 것과 실제 사용 품질이 같은지 의심하고, 반복 실패만 외부 관찰 루프로 보내 최소 수정과 회귀 검증을 거치는 **Harness Engineering → Loop Engineering 확장**을 재현합니다.
 
 자세한 설계는 [아키텍처](docs/ARCHITECTURE.md), [안전 정책](docs/SAFETY_POLICY.md), [실패 개선 루프](docs/LOOP_ENGINEERING.md)에서 확인할 수 있습니다.
+
+최근 설계 경험: [실행 연결과 독립 검토](docs/EXECUTION_COORDINATION.md). 비공개 런타임의 개선 기록이며, 공개 데모 기능 및 실환경 검증 완료와 구분합니다.

@@ -96,3 +96,5 @@ Excluded:
 The demo shows a human-in-the-loop workflow that normalizes unstructured documents, checks form contracts, and blocks unsafe execution plans. Its outer loop questions whether passing checks reflects actual quality, then routes selected failures toward reviewed corrections and regression verification.
 
 Additional design documents are currently in Korean: [architecture](docs/ARCHITECTURE.md), [safety policy](docs/SAFETY_POLICY.md), and [failure improvement loop](docs/LOOP_ENGINEERING.md).
+
+Recent design notes: [execution wiring and independent review](docs/EXECUTION_COORDINATION.en.md). These describe private-runtime work, separately from public-demo functionality and completed live validation.
